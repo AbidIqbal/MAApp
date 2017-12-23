@@ -60,19 +60,13 @@
                 android:textColorHint="#fff"
                 android:maxLines="1"
                 android:drawableLeft="@drawable/lock"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="20dp"
                 android:id="@+id/password"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#f9d7db"/>
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:textColor="#fff"
-                android:text="Remember me "
-                android:padding="8dp"/>
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -83,35 +77,25 @@
                 android:padding="16dp"
                 android:clickable="true"
                 style="@style/Base.TextAppearance.AppCompat.Body1"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="50dp"
                 android:textSize="18sp"
                 android:id="@+id/signin"
                 />
+
             <Button
+                android:id="@+id/signup"
+                style="@style/Base.TextAppearance.AppCompat.Body1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
                 android:background="@drawable/signup_button"
+                android:clickable="true"
+                android:padding="16dp"
                 android:text="Sign up"
-                style="@style/Base.TextAppearance.AppCompat.Body1"
-                android:textColor="#fff"
                 android:textAllCaps="false"
-                android:textSize="18sp"
-                android:layout_marginTop="20dp"
-                android:clickable="true"
-                android:padding="16dp"
-                android:id="@+id/signup"
-                />
+                android:textColor="#fff"
+                android:textSize="18sp" />
 
-            <TextView
-                style="@style/Base.TextAppearance.AppCompat.Body2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="16dp"
-                android:clickable="true"
-                android:padding="16dp"
-                android:text="Forgot your password"
-                android:textColor="#fff" />
         </LinearLayout>
     </ScrollView>
 

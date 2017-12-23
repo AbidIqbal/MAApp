@@ -9,10 +9,15 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -21,17 +26,75 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 public class Map extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
     GoogleMap map;
     LocationManager locationManager;
 
+    public ArrayList<RegisterServiceData> serviceDataList;
+    public ArrayAdapter<String> arrayAdapter;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+
+        serviceDataList=new ArrayList<>();
+
+        // Write a message to the database
+         database= FirebaseDatabase.getInstance();
+
+         Bundle bundle=getIntent().getExtras();
+         String service=bundle.getString("serviceName");
+
+
+
+                myRef= database.getReference("user").child(service);
+
+                // Read from the database
+
+
+                myRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // This method is called once with the initial value and again
+                        // whenever data at this location is updated.
+//                        String val="hy";
+//                        val=dataSnapshot.getValue(RegisterServiceData.class).getFullName();
+                        for(DataSnapshot snapshot:dataSnapshot.getChildren()){
+                            RegisterServiceData service=snapshot.getValue(RegisterServiceData.class);
+//                            Log.i("value",Long.toString(dataSnapshot.getChildrenCount()));
+                            serviceDataList.add(service);
+                            Log.i("value",serviceDataList.get(0).getFullName());
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                        // Failed to read value
+                        Log.i("value",error.toString());
+
+                    }
+
+        });
+                for(int i=0;i<serviceDataList.size();i++){
+                    Log.i("value",serviceDataList.get(i).getFullName());
+                }
+
+
 
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
 

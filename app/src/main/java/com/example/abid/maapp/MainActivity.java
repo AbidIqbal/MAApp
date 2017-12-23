@@ -1,5 +1,6 @@
 package com.example.abid.maapp;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     public static Button SigninButton;
     public static EditText Email;
     public static EditText Password;
+    private ProgressDialog mprogress;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -33,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mprogress=new ProgressDialog(this);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -74,9 +78,8 @@ public class MainActivity extends AppCompatActivity {
         SignupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,Signup.class));
-//                Intent intent = new Intent("com.example.abid.maapp.Signup");
-//                startActivity(intent);
+                startActivity(new Intent(MainActivity.this,ServicesList.class));
+
             }
         });
     }
@@ -87,11 +90,14 @@ public class MainActivity extends AppCompatActivity {
         String password = Password.getText().toString();
         Log.i("data",email+password);
 
+
         if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)){
             Toast.makeText(MainActivity.this,"Email or password is empty",Toast.LENGTH_LONG).show();
 
         }
         else{
+            mprogress.setMessage("Logging in");
+            mprogress.show();
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -100,12 +106,14 @@ public class MainActivity extends AppCompatActivity {
                             if ((!task.isSuccessful())) {
 
                                 Toast.makeText(MainActivity.this,"Sign in problem",Toast.LENGTH_LONG).show();
+                                mprogress.dismiss();
 
                             }
                             else{
 
                                 Toast.makeText(MainActivity.this,"Sign in ho gea",Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(MainActivity.this,Map.class));
+                                mprogress.dismiss();
+                                startActivity(new Intent(MainActivity.this,ServiceDetail.class));
 
                             }
                         }

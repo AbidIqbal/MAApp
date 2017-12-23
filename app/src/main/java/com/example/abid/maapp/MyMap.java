@@ -87,9 +87,10 @@ public class MyMap extends AppCompatActivity implements OnMapReadyCallback,Locat
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 latitude=ll.latitude;
                                 longitude=ll.longitude;
-                                SignupUser signupUser=new SignupUser();
-                                signupUser.LocationStatus.setText("Location Selected");
-                                startActivity(new Intent(MyMap.this,SignupUser.class));
+                                Intent intent=new Intent(MyMap.this,RegisterService.class);
+                                intent.putExtra("latitude",latitude);
+                                intent.putExtra("longitude",longitude);
+                                startActivity(intent);
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
