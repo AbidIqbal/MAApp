@@ -5,11 +5,12 @@
     <string name="section_format">Hello World from section: %1$d</string>
 
     <string name="map_type_none">None </string>
-    <string name="map_type_normal">Normal</string>
-    <string name="map_type_terrain">Terrain</string>
-    <string name="map_type_satellite">Satellite</string>
-    <string name="map_type_hybrid">Hybrid</string>
+    <string name="map_type_normal">Normal Map</string>
+    <string name="map_type_terrain">Terrain Map</string>
+    <string name="map_type_satellite">Satellite Map</string>
+    <string name="map_type_hybrid">Hybrid Map</string>
     <string name="Log_out">Log Out</string>
+    <string name="addService">Add Service</string>
 
     <string-array name="services">
         <item>Hotel</item>

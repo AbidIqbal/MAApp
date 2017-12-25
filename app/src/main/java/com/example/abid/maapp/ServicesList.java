@@ -3,6 +3,8 @@ package com.example.abid.maapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,7 +14,7 @@ import android.widget.Toast;
 public class ServicesList extends AppCompatActivity {
 
     public ListView listView;
-    public String[] serviceNames=new String[] {"Hospitals","Shopping Mall","Mobile Shops","Tuck Shops","Mechanics","Petrol Pumps","Airports","Sports Shops"};
+    public String[] serviceNames=new String[] {"Hospitals","Hotel","Shopping Mall","Mobile Shops","Tuck Shops","Mechanics","Petrol Pumps","Airports","Sports Shops"};
 
 
     @Override
@@ -22,7 +24,6 @@ public class ServicesList extends AppCompatActivity {
 
         listView=(ListView) findViewById(R.id.servicesList);
         setListView();
-
 
     }
 
@@ -41,4 +42,27 @@ public class ServicesList extends AppCompatActivity {
         });
 
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.services_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.addservice:
+                startActivity(new Intent(ServicesList.this,RegisterService.class));
+                break;
+            case R.id.logout:
+                Intent i=new Intent(ServicesList.this,MainActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+            default:
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

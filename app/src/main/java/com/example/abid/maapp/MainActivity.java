@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         SignupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,ServicesList.class));
+                startActivity(new Intent(MainActivity.this,Signup.class));
 
             }
         });
@@ -113,7 +113,8 @@ public class MainActivity extends AppCompatActivity {
 
                                 Toast.makeText(MainActivity.this,"Sign in ho gea",Toast.LENGTH_LONG).show();
                                 mprogress.dismiss();
-                                startActivity(new Intent(MainActivity.this,ServiceDetail.class));
+                                startActivity(new Intent(MainActivity.this,ServicesList.class));
+                                finish();
 
                             }
                         }

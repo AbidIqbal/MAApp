@@ -5,22 +5,75 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-    <TextView
-        android:id="@+id/nameOfUser"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name"
-        android:textSize="20sp"/>
-    <TextView
-        android:id="@+id/contactOfUser"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name:         "
+            android:textSize="20sp"/>
+        <TextView
+            android:id="@+id/nameOfUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name here"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Contact"
-        android:textSize="20sp"/>
-    <TextView
-        android:id="@+id/serviceOfUser"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contact:      "
+            android:textSize="20sp"/>
+        <TextView
+            android:id="@+id/contactOfUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contact here"
+            android:textSize="20sp"/>
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Service"
-        android:textSize="20sp"/>
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start Time: "
+            android:textSize="20sp"/>
+        <TextView
+            android:id="@+id/startTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start Time here"
+            android:textSize="20sp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="End Time:   "
+            android:textSize="20sp"/>
+        <TextView
+            android:id="@+id/endTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="End Time here"
+            android:textSize="20sp"/>
+    </LinearLayout>
+
+
 </LinearLayout>

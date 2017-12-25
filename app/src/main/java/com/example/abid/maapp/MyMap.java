@@ -14,6 +14,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -141,5 +143,41 @@ public class MyMap extends AppCompatActivity implements OnMapReadyCallback,Locat
     public void onProviderDisabled(String s) {
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.mapTypeNone:
+                myMap.setMapType(GoogleMap.MAP_TYPE_NONE);
+                break;
+            case R.id.mapTypeNormal:
+                myMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                break;
+            case R.id.mapTypeSatellite:
+                myMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                break;
+            case R.id.mapTypeTerrain:
+                myMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                break;
+            case R.id.mapTypeHybrid:
+                myMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                break;
+            case R.id.logout:
+                Intent i=new Intent(MyMap.this,MainActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+            default:
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }
 

@@ -28,21 +28,26 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:label="Sign In">
             <intent-filter>
                 <action android:name="com.example.abid.maapp.MainActivity" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".MyMap">
+        <activity
+            android:name=".MyMap"
+            android:label="Map">
             <intent-filter>
                 <action android:name="com.example.abid.maapp.MyMap" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".Signup">
+        <activity
+            android:name=".Signup"
+            android:label="Sign Up">
             <intent-filter>
                 <action android:name="com.example.abid.maapp.Signup" />
 
@@ -64,10 +69,16 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".Map" />
-        <activity android:name=".RegisterService" />
-        <activity android:name=".ServiceDetail" />
-        <activity android:name=".ServicesList"></activity>
+        <activity
+            android:name=".Map"
+            android:label="Map"> </activity>
+        <activity
+            android:name=".RegisterService"
+            android:label="Service Registration">
+        </activity>
+        <activity
+            android:name=".ServicesList"
+            android:label="Services"></activity>
     </application>
 
 </manifest>

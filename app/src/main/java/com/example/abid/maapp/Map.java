@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -45,10 +46,25 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, Locati
     FirebaseDatabase database;
     DatabaseReference myRef;
 
+    TextView NameOfServiceProvider;
+    TextView ContactOfServiceProvider;
+    TextView ServiceStartTime;
+    TextView ServiceEndTime;
+
+    public String[] nameofServiceProvider;
+    public String []contactofservice;
+    public String []startTime;
+    public String []endTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+
+        nameofServiceProvider=new String[20];
+        contactofservice=new String[20];
+        startTime=new String[20];
+        endTime=new String[20];
 
         serviceDataList=new ArrayList<>();
 
@@ -72,11 +88,29 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, Locati
                         // whenever data at this location is updated.
 //                        String val="hy";
 //                        val=dataSnapshot.getValue(RegisterServiceData.class).getFullName();
+                        int i=1;
                         for(DataSnapshot snapshot:dataSnapshot.getChildren()){
                             RegisterServiceData service=snapshot.getValue(RegisterServiceData.class);
 //                            Log.i("value",Long.toString(dataSnapshot.getChildrenCount()));
                             serviceDataList.add(service);
-                            Log.i("value",serviceDataList.get(0).getFullName());
+                            Log.i("value",Double.toString(service.getLatitude()));
+                            gotoLocation(service.getLatitude(),service.getLongitude());
+
+                            if(i==1){
+                                nameofServiceProvider[0]=service.getFullName();
+                                contactofservice[0]=service.getContact();
+                                startTime[0]=service.getStartTime();
+                                endTime[0]=service.getEndTime();
+                                i++;
+                            }
+                            else if(i==2){
+                                nameofServiceProvider[1]=service.getFullName();
+                                contactofservice[1]=service.getContact();
+                                startTime[1]=service.getStartTime();
+                                endTime[1]=service.getEndTime();
+                                i++;
+                            }
+
                         }
 
 
@@ -90,9 +124,6 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, Locati
                     }
 
         });
-                for(int i=0;i<serviceDataList.size();i++){
-                    Log.i("value",serviceDataList.get(i).getFullName());
-                }
 
 
 
@@ -114,7 +145,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, Locati
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1, 1, this);
+//        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1, 1, this);
     }
 
     @Override
@@ -126,9 +157,25 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, Locati
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.logout:
-                startActivity(new Intent(Map.this,MainActivity.class));
+            case R.id.mapTypeNone:
+                map.setMapType(GoogleMap.MAP_TYPE_NONE);
                 break;
+            case R.id.mapTypeNormal:
+                map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                break;
+            case R.id.mapTypeSatellite:
+                map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                break;
+            case R.id.mapTypeTerrain:
+                map.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                break;
+            case R.id.mapTypeHybrid:
+                map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                break;
+            case R.id.logout:
+                Intent i=new Intent(Map.this,MainActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
             default:
                 break;
 
@@ -136,6 +183,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, Locati
         return super.onOptionsItemSelected(item);
     }
 
+    int count=1;
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
@@ -151,13 +199,30 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, Locati
                 public View getInfoContents(Marker marker) {
 
                     View v=getLayoutInflater().inflate(R.layout.info_window,null);
-                    TextView Name=(TextView) v.findViewById(R.id.nameOfUser);
-                    TextView Contact=(TextView) v.findViewById(R.id.contactOfUser);
-                    TextView Service=(TextView) v.findViewById(R.id.serviceOfUser);
+                    NameOfServiceProvider=(TextView) v.findViewById(R.id.nameOfUser);
+                    ContactOfServiceProvider=(TextView) v.findViewById(R.id.contactOfUser);
+                    ServiceStartTime=(TextView) v.findViewById(R.id.startTime);
+                    ServiceEndTime=(TextView) v.findViewById(R.id.endTime);
+                    if(count==1|| count>2){
+                        NameOfServiceProvider.setText(nameofServiceProvider[0]);
+                        ContactOfServiceProvider.setText(contactofservice[0]);
+                        ServiceStartTime.setText(startTime[0]);
+                        ServiceEndTime.setText(endTime[0]);
+                        count++;
+                    }
+                    else if(count==2){
+                        NameOfServiceProvider.setText(nameofServiceProvider[1]);
+                        ContactOfServiceProvider.setText(contactofservice[1]);
+                        ServiceStartTime.setText(startTime[1]);
+                        ServiceEndTime.setText(endTime[1]);
+                        count++;
+                    }
+
+
+
                     LatLng latLng=marker.getPosition();
-                    Name.setText("Abid");
-                    Contact.setText("03460606041");
-                    Service.setText("Hotel");
+
+
                     return v;
                 }
             });
@@ -168,10 +233,22 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, Locati
 
     }
 
+    public void addmarkerwithdata(double lat, double lng){
+        MarkerOptions markerOptions=new MarkerOptions()
+                .position(new LatLng(lat,lng));
+        map.addMarker(markerOptions);
+    }
+    public void gotoLocation(double lat, double lng){
+        LatLng ll=new LatLng(lat,lng);
+        CameraUpdate update=CameraUpdateFactory.newLatLngZoom(ll,15);
+        map.moveCamera(update);
+        addmarkerwithdata(lat,lng);
+    }
+
     @Override
     public void onLocationChanged(Location location) {
 
-        map.clear();
+//        map.clear();
         LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
 
 

@@ -12,7 +12,8 @@
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        tools:theme="@style/Animation.AppCompat.Dialog">
 
 
         <TextView
@@ -28,15 +29,15 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.045"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.015" />
+            app:layout_constraintVertical_bias="0.023" />
 
         <Button
             android:id="@+id/selectLocationButton"
             style="@style/Base.TextAppearance.AppCompat.Body1"
-            android:layout_width="144dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
@@ -67,10 +68,10 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.036"
+            app:layout_constraintHorizontal_bias="0.041"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2"
-            app:layout_constraintVertical_bias="0.084" />
+            app:layout_constraintVertical_bias="0.072" />
 
         <Spinner
             android:id="@+id/typeOfService"
@@ -80,15 +81,14 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:background="@color/common_google_signin_btn_text_dark_default"
-            android:popupBackground="@color/cardview_light_background"
+            android:backgroundTint="@color/cardview_light_background"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.958"
+            app:layout_constraintHorizontal_bias="0.952"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/selectLocationButton"
-            app:layout_constraintVertical_bias="0.034" />
+            app:layout_constraintVertical_bias="0.042" />
 
         <EditText
             android:id="@+id/nameOfServiceProvider"
@@ -98,6 +98,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
             android:ems="10"
             android:hint="Full Name"
             android:inputType="textPersonName"
@@ -108,7 +109,13 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/typeOfService"
-            app:layout_constraintVertical_bias="0.054" />
+            app:layout_constraintVertical_bias="0.028" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#f9d7db"
+            app:layout_constraintTop_toBottomOf="@+id/nameOfServiceProvider" />
 
         <EditText
             android:id="@+id/contactOfService"
@@ -118,8 +125,10 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
             android:ems="10"
             android:hint="Contact"
+
             android:inputType="phone"
             android:textColor="#fff"
             android:textColorHint="#fff"
@@ -128,7 +137,15 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nameOfServiceProvider"
-            app:layout_constraintVertical_bias="0.05" />
+            app:layout_constraintVertical_bias="0.012" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#f9d7db"
+            app:layout_constraintTop_toBottomOf="@+id/contactOfService" />
+
 
         <TextView
             android:id="@+id/textView4"
@@ -138,7 +155,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Service Timing"
+            android:text="Starting Time"
             android:textColor="#fff"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -151,90 +168,97 @@
 
         <Button
             android:id="@+id/registerServiceButton"
-            android:layout_width="wrap_content"
+            android:layout_width="155dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="56dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:background="@drawable/signup_button"
             android:text="Register"
+            android:textAllCaps="false"
+            android:textColor="#fff"
+            android:textSize="18sp"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fromTime"
-            app:layout_constraintVertical_bias="0.229" />
+            app:layout_constraintTop_toBottomOf="@+id/contactOfService"
+            app:layout_constraintVertical_bias="0.393" />
 
         <EditText
             android:id="@+id/fromTime"
-            android:layout_width="63dp"
+            android:layout_width="130dp"
             android:layout_height="42dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:ems="10"
+            android:hint="Start Time here"
             android:inputType="time"
             android:textColor="#fff"
+            android:textColorHint="#fff"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.372"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4"
-            app:layout_constraintVertical_bias="0.07" />
+            app:layout_constraintHorizontal_bias="0.571"
+            app:layout_constraintStart_toEndOf="@+id/textView4"
+            app:layout_constraintTop_toBottomOf="@+id/view2"
+            app:layout_constraintVertical_bias="0.046" />
 
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Start Time"
-            android:textColor="#fff"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/registerServiceButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4"
-            app:layout_constraintVertical_bias="0.481" />
+        <View
+            android:id="@+id/view3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#f9d7db"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="End Time"
-            android:textColor="#fff"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/registerServiceButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/fromTime"
-            app:layout_constraintTop_toBottomOf="@+id/textView4"
-            app:layout_constraintVertical_bias="0.469" />
 
         <EditText
             android:id="@+id/toTime"
-            android:layout_width="63dp"
+            android:layout_width="130dp"
             android:layout_height="42dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:ems="10"
+            android:hint="End Time here"
             android:inputType="time"
             android:textColor="#fff"
+            android:textColorHint="#fff"
             app:layout_constraintBottom_toTopOf="@+id/registerServiceButton"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.428"
-            app:layout_constraintStart_toEndOf="@+id/textView6"
+            app:layout_constraintHorizontal_bias="0.606"
+            app:layout_constraintStart_toEndOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/fromTime"
+            app:layout_constraintVertical_bias="0.25" />
+
+        <View
+            android:id="@+id/view4"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#f9d7db"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Ending Time"
+            android:textColor="#fff"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4"
-            app:layout_constraintVertical_bias="0.328" />
+            app:layout_constraintVertical_bias="0.067" />
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

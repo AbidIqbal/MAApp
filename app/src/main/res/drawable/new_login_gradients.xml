@@ -6,10 +6,4 @@
     android:startColor="#202165"
     android:angle="90"/>
 
-<padding
-    android:left="7dp"
-    android:top="7dp"
-    android:right="7dp"
-    android:bottom="7dp"/>
-<corners android:radius="8dp"/>
 </shape>
