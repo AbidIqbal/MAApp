@@ -69,7 +69,7 @@ public class Signup extends AppCompatActivity {
 
                                         mprogress.dismiss();
                                         Toast.makeText(Signup.this, "You are Registered, Now signin", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(Signup.this,MainActivity.class));
+                                        startActivity(new Intent(Signup.this,LoginActivity.class));
 
                                     } else {
                                         // If sign in fails, display a message to the user.

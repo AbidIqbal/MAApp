@@ -22,16 +22,16 @@ public class SplashScreen extends AppCompatActivity {
         Animation myanim= AnimationUtils.loadAnimation(this,R.anim.mytransition);
         tv.startAnimation(myanim);
         iv.startAnimation(myanim);
-        final Intent mainActivity=new Intent("com.example.abid.maapp.MainActivity");
+        final Intent loginActivity=new Intent("com.example.abid.maapp.LoginActivity");
         Thread timer=new Thread(){
             public void run(){
                 try {
-                    sleep(500);
+                    sleep(1000);
                 } catch (InterruptedException e) {
 
                 }
                 finally {
-                    startActivity(mainActivity);
+                    startActivity(loginActivity);
                     finish();
 
                 }

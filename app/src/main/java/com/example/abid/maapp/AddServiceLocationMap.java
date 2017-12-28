@@ -30,7 +30,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-public class MyMap extends AppCompatActivity implements OnMapReadyCallback,LocationListener {
+public class AddServiceLocationMap extends AppCompatActivity implements OnMapReadyCallback,LocationListener {
 
     LocationManager locationManager;
     GoogleMap myMap;
@@ -81,7 +81,7 @@ public class MyMap extends AppCompatActivity implements OnMapReadyCallback,Locat
                 final LatLng ll=marker.getPosition();
                 marker.setTitle(Double.toString(ll.latitude));
 
-                AlertDialog.Builder myBuilder=new AlertDialog.Builder(MyMap.this);
+                AlertDialog.Builder myBuilder=new AlertDialog.Builder(AddServiceLocationMap.this);
                 myBuilder.setMessage("Are you sure you want to select this location??")
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -89,7 +89,7 @@ public class MyMap extends AppCompatActivity implements OnMapReadyCallback,Locat
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 latitude=ll.latitude;
                                 longitude=ll.longitude;
-                                Intent intent=new Intent(MyMap.this,RegisterService.class);
+                                Intent intent=new Intent(AddServiceLocationMap.this,RegisterService.class);
                                 intent.putExtra("latitude",latitude);
                                 intent.putExtra("longitude",longitude);
                                 startActivity(intent);
@@ -169,7 +169,7 @@ public class MyMap extends AppCompatActivity implements OnMapReadyCallback,Locat
                 myMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                 break;
             case R.id.logout:
-                Intent i=new Intent(MyMap.this,MainActivity.class);
+                Intent i=new Intent(AddServiceLocationMap.this,LoginActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
             default:

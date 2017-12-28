@@ -36,13 +36,15 @@ import com.google.firebase.database.ValueEventListener;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
-
-public class Map extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
+/**
+ * this class is used to show selected service on the map
+ * a marker is added on every registered service position
+ * it implements two interfaces to load map and to get current user location
+ */
+public class ServiceMap extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
     GoogleMap map;
     LocationManager locationManager;
 
-    public ArrayList<RegisterServiceData> serviceDataList;
-    public ArrayAdapter<String> arrayAdapter;
     FirebaseDatabase database;
     DatabaseReference myRef;
 
@@ -51,10 +53,10 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, Locati
     TextView ServiceStartTime;
     TextView ServiceEndTime;
 
-    public String[] nameofServiceProvider;
-    public String []contactofservice;
-    public String []startTime;
-    public String []endTime;
+    public String [] nameofServiceProvider;
+    public String [] contactofservice;
+    public String [] startTime;
+    public String [] endTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,50 +68,53 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, Locati
         startTime=new String[20];
         endTime=new String[20];
 
-        serviceDataList=new ArrayList<>();
 
-        // Write a message to the database
+        // getting instance of firebase database to get data
          database= FirebaseDatabase.getInstance();
 
+         //getting selected service name which was sent from serviceList Activity
          Bundle bundle=getIntent().getExtras();
          String service=bundle.getString("serviceName");
 
-
-
+                //getting reference of the selected child(Service) from parent user in database
                 myRef= database.getReference("user").child(service);
 
                 // Read from the database
-
-
                 myRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         // This method is called once with the initial value and again
                         // whenever data at this location is updated.
-//                        String val="hy";
-//                        val=dataSnapshot.getValue(RegisterServiceData.class).getFullName();
                         int i=1;
                         for(DataSnapshot snapshot:dataSnapshot.getChildren()){
+                            //getting the data object as a model which is used to send data
+                            // using RegisterServiceData Model class
                             RegisterServiceData service=snapshot.getValue(RegisterServiceData.class);
-//                            Log.i("value",Long.toString(dataSnapshot.getChildrenCount()));
-                            serviceDataList.add(service);
-                            Log.i("value",Double.toString(service.getLatitude()));
+                            //this method will shift the user camera view to the received location position
                             gotoLocation(service.getLatitude(),service.getLongitude());
 
-                            if(i==1){
-                                nameofServiceProvider[0]=service.getFullName();
-                                contactofservice[0]=service.getContact();
-                                startTime[0]=service.getStartTime();
-                                endTime[0]=service.getEndTime();
-                                i++;
-                            }
-                            else if(i==2){
-                                nameofServiceProvider[1]=service.getFullName();
-                                contactofservice[1]=service.getContact();
-                                startTime[1]=service.getStartTime();
-                                endTime[1]=service.getEndTime();
-                                i++;
-                            }
+                            //saving received data into arrays to be used for marker
+                            nameofServiceProvider[i]=service.getFullName();
+                            contactofservice[i]=service.getContact();
+                            startTime[i]=service.getStartTime();
+                            endTime[i]=service.getEndTime();
+                            i++;
+
+
+//                            if(i==1){
+//                                nameofServiceProvider[0]=service.getFullName();
+//                                contactofservice[0]=service.getContact();
+//                                startTime[0]=service.getStartTime();
+//                                endTime[0]=service.getEndTime();
+//                                i++;
+//                            }
+//                            else if(i==2){
+//                                nameofServiceProvider[1]=service.getFullName();
+//                                contactofservice[1]=service.getContact();
+//                                startTime[1]=service.getStartTime();
+//                                endTime[1]=service.getEndTime();
+//                                i++;
+//                            }
 
                         }
 
@@ -126,15 +131,14 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, Locati
         });
 
 
+        // Map fragment is used to show map to the user
 
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
 
         mapFragment.getMapAsync(this);
 
-        //  map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-
+        //getting the current location of the user
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -148,15 +152,18 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, Locati
 //        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1, 1, this);
     }
 
+    //override method for menu options
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu,menu);
         return super.onCreateOptionsMenu(menu);
     }
 
+    //override method to handle menu options clicks
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
+            //setting up different map types
             case R.id.mapTypeNone:
                 map.setMapType(GoogleMap.MAP_TYPE_NONE);
                 break;
@@ -172,8 +179,10 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, Locati
             case R.id.mapTypeHybrid:
                 map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                 break;
+            // case to handle user logout
+            // all the activity stack will be destroyed
             case R.id.logout:
-                Intent i=new Intent(Map.this,MainActivity.class);
+                Intent i=new Intent(ServiceMap.this,LoginActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
             default:

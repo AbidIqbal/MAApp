@@ -22,25 +22,25 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:theme="@style/AppTheme"
             android:label="Sign In">
             <intent-filter>
-                <action android:name="com.example.abid.maapp.MainActivity" />
+                <action android:name="com.example.abid.maapp.LoginActivity" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".MyMap"
-            android:label="Map">
+            android:name=".AddServiceLocationMap"
+            android:label="Your Service Location">
             <intent-filter>
-                <action android:name="com.example.abid.maapp.MyMap" />
+                <action android:name="com.example.abid.maapp.AddServiceLocationMap" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -70,8 +70,8 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".Map"
-            android:label="Map"> </activity>
+            android:name=".ServiceMap"
+            android:label="Service Map"> </activity>
         <activity
             android:name=".RegisterService"
             android:label="Service Registration">

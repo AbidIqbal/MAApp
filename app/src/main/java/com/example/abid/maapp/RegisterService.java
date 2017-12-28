@@ -75,7 +75,7 @@ public class RegisterService extends AppCompatActivity {
         selectLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(RegisterService.this,MyMap.class));
+                startActivity(new Intent(RegisterService.this,AddServiceLocationMap.class));
             }
         });
 
