@@ -13,9 +13,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,9 +30,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 /**
  * this class is used to show selected service on the map
  * a marker is added on every registered service position
@@ -53,20 +47,16 @@ public class ServiceMap extends AppCompatActivity implements OnMapReadyCallback,
     TextView ServiceStartTime;
     TextView ServiceEndTime;
 
-    public String [] nameofServiceProvider;
-    public String [] contactofservice;
-    public String [] startTime;
-    public String [] endTime;
+    int sizeOfData=1;
+
+    public MarkerData[] markerData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map);
+        setContentView(R.layout.activity_service_map);
 
-        nameofServiceProvider=new String[20];
-        contactofservice=new String[20];
-        startTime=new String[20];
-        endTime=new String[20];
+        markerData=new MarkerData[30];
 
 
         // getting instance of firebase database to get data
@@ -85,36 +75,22 @@ public class ServiceMap extends AppCompatActivity implements OnMapReadyCallback,
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         // This method is called once with the initial value and again
                         // whenever data at this location is updated.
-                        int i=1;
+
                         for(DataSnapshot snapshot:dataSnapshot.getChildren()){
                             //getting the data object as a model which is used to send data
                             // using RegisterServiceData Model class
                             RegisterServiceData service=snapshot.getValue(RegisterServiceData.class);
                             //this method will shift the user camera view to the received location position
-                            gotoLocation(service.getLatitude(),service.getLongitude());
+                            try{
+                                gotoLocation(service.getLatitude(),service.getLongitude());
+                            }
+                            catch (Exception e){
+                                Toast.makeText(ServiceMap.this,"Network problem",Toast.LENGTH_SHORT);
+                            }
 
-                            //saving received data into arrays to be used for marker
-                            nameofServiceProvider[i]=service.getFullName();
-                            contactofservice[i]=service.getContact();
-                            startTime[i]=service.getStartTime();
-                            endTime[i]=service.getEndTime();
-                            i++;
-
-
-//                            if(i==1){
-//                                nameofServiceProvider[0]=service.getFullName();
-//                                contactofservice[0]=service.getContact();
-//                                startTime[0]=service.getStartTime();
-//                                endTime[0]=service.getEndTime();
-//                                i++;
-//                            }
-//                            else if(i==2){
-//                                nameofServiceProvider[1]=service.getFullName();
-//                                contactofservice[1]=service.getContact();
-//                                startTime[1]=service.getStartTime();
-//                                endTime[1]=service.getEndTime();
-//                                i++;
-//                            }
+                            MarkerData data=new MarkerData(service.getLatitude(),service.getLongitude(),service.getFullName(),service.getContact(),service.getStartTime(),service.getEndTime());
+                            markerData[sizeOfData]=data;
+                            sizeOfData++;
 
                         }
 
@@ -149,7 +125,7 @@ public class ServiceMap extends AppCompatActivity implements OnMapReadyCallback,
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-//        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1, 1, this);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 1, this);
     }
 
     //override method for menu options
@@ -164,9 +140,6 @@ public class ServiceMap extends AppCompatActivity implements OnMapReadyCallback,
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             //setting up different map types
-            case R.id.mapTypeNone:
-                map.setMapType(GoogleMap.MAP_TYPE_NONE);
-                break;
             case R.id.mapTypeNormal:
                 map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                 break;
@@ -192,6 +165,19 @@ public class ServiceMap extends AppCompatActivity implements OnMapReadyCallback,
         return super.onOptionsItemSelected(item);
     }
 
+
+    /***************************************************************************************
+     *    Title: Android Maps: Part 3: Markers
+     *    Author: Vivian Aranha
+     *    Date Accessed: 26 Dec. 2017
+     *    Code version: N/A
+     *    Availability: https://www.youtube.com/watch?v=k253ec4m33A
+     *
+     ***************************************************************************************/
+
+
+    //override method to add specific things on the map
+    //here used to add data to the markers.
     int count=1;
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -207,69 +193,63 @@ public class ServiceMap extends AppCompatActivity implements OnMapReadyCallback,
                 @Override
                 public View getInfoContents(Marker marker) {
 
+                    //setting up infowindow with data for marker
                     View v=getLayoutInflater().inflate(R.layout.info_window,null);
                     NameOfServiceProvider=(TextView) v.findViewById(R.id.nameOfUser);
                     ContactOfServiceProvider=(TextView) v.findViewById(R.id.contactOfUser);
                     ServiceStartTime=(TextView) v.findViewById(R.id.startTime);
                     ServiceEndTime=(TextView) v.findViewById(R.id.endTime);
-                    if(count==1|| count>2){
-                        NameOfServiceProvider.setText(nameofServiceProvider[0]);
-                        ContactOfServiceProvider.setText(contactofservice[0]);
-                        ServiceStartTime.setText(startTime[0]);
-                        ServiceEndTime.setText(endTime[0]);
-                        count++;
+
+                    double lat=marker.getPosition().latitude;
+                    double lng=marker.getPosition().longitude;
+                    //getting data from stored array based on location
+                    for(int i=1;i<sizeOfData;i++){
+                        if(markerData[i].getLatitude()==lat && markerData[i].getLongitude()==lng){
+                            NameOfServiceProvider.setText(markerData[i].getFullName());
+                            ContactOfServiceProvider.setText(markerData[i].getContact());
+                            ServiceStartTime.setText(markerData[i].getStartTime());
+                            ServiceEndTime.setText(markerData[i].getEndTime());
+                        }
                     }
-                    else if(count==2){
-                        NameOfServiceProvider.setText(nameofServiceProvider[1]);
-                        ContactOfServiceProvider.setText(contactofservice[1]);
-                        ServiceStartTime.setText(startTime[1]);
-                        ServiceEndTime.setText(endTime[1]);
-                        count++;
-                    }
-
-
-
-                    LatLng latLng=marker.getPosition();
-
-
                     return v;
                 }
             });
         }
 
-        // map.setMyLocationEnabled(true);
+//         map.setMyLocationEnabled(true);
 
 
     }
 
-    public void addmarkerwithdata(double lat, double lng){
+    //method to add marker on a specific location
+    public void addMarkerOnSpecificPoint(double lat, double lng){
         MarkerOptions markerOptions=new MarkerOptions()
                 .position(new LatLng(lat,lng));
         map.addMarker(markerOptions);
     }
+    //method to load a specific location onto the map
     public void gotoLocation(double lat, double lng){
         LatLng ll=new LatLng(lat,lng);
         CameraUpdate update=CameraUpdateFactory.newLatLngZoom(ll,15);
-        map.moveCamera(update);
-        addmarkerwithdata(lat,lng);
+        map.animateCamera(update);
+        addMarkerOnSpecificPoint(lat,lng);
     }
 
+    //override method to add marker on current user location
     @Override
     public void onLocationChanged(Location location) {
 
-//        map.clear();
+
         LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
 
 
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(currentLocation);
-        markerOptions.title("i'm here");
+        markerOptions.title("You are here");
 
         map.addMarker(markerOptions);
 
-        // map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 17.0f));
-
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 17.0f));
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 10.0f));
     }
 
     @Override

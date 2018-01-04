@@ -38,7 +38,8 @@
         </activity>
         <activity
             android:name=".AddServiceLocationMap"
-            android:label="Your Service Location">
+            android:label="Your Service Location"
+            android:parentActivityName=".RegisterService">
             <intent-filter>
                 <action android:name="com.example.abid.maapp.AddServiceLocationMap" />
 
@@ -47,14 +48,16 @@
         </activity>
         <activity
             android:name=".Signup"
-            android:label="Sign Up">
+            android:label="Sign Up"
+            android:parentActivityName=".LoginActivity">
             <intent-filter>
                 <action android:name="com.example.abid.maapp.Signup" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".SplashScreen">
+        <activity android:name=".SplashScreen"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -71,10 +74,12 @@
 
         <activity
             android:name=".ServiceMap"
-            android:label="Service Map"> </activity>
+            android:label="Service Map"
+            android:parentActivityName=".ServicesList"> </activity>
         <activity
             android:name=".RegisterService"
-            android:label="Service Registration">
+            android:label="Service Registration"
+            android:parentActivityName=".ServicesList">
         </activity>
         <activity
             android:name=".ServicesList"

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.abid.maapp.ServicesList">
+    tools:context="com.example.abid.maapp.ServicesList"
+    android:background="@drawable/new_login_gradients">
 
     <ListView
         android:id="@+id/servicesList"

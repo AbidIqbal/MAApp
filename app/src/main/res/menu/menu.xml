@@ -3,9 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.abid.maapp.MyMap">
 
-    <item
-        android:id="@+id/mapTypeNone"
-        android:title="@string/map_type_none"/>
 
     <item
         android:id="@+id/mapTypeNormal"

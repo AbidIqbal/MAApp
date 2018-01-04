@@ -39,6 +39,14 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        /***************************************************************************************
+         *    Title: How to show progress dialog in Android?
+         *    Author: Abhishek Punia
+         *    Date Accessed: 21 Dec. 2017
+         *    Code version: N/A
+         *    Availability: https://stackoverflow.com/questions/10446125/how-to-show-progress-dialog-in-android
+         *
+         ***************************************************************************************/
 
         mprogress=new ProgressDialog(this);
         mAuth = FirebaseAuth.getInstance();
@@ -51,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if(firebaseAuth.getCurrentUser()==null){
-                    Toast.makeText(LoginActivity.this,"Successful intent",Toast.LENGTH_LONG).show();
+
                 }
             }
         };
@@ -103,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
             mprogress.show();
             //Authentication of user using firebase authentication service.
             //method call to signin using email and password.
+
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override

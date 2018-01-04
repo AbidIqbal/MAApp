@@ -1,5 +1,9 @@
 package com.example.abid.maapp;
 
+/**
+ * It is a Model class for data storage and retrieval
+ * Used to add A new Service and to retrieve a specific data from object being received from firebase.
+ */
 public class RegisterServiceData {
 
     private double latitude;

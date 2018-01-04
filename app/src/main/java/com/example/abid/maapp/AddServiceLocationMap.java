@@ -9,27 +9,27 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
+/**
+ * A class for showing Map to the user
+ * Used for Service Location Selection.
+ * It has dragable marker to select location.
+ * uses Current user location to place initial marker.
+ */
 public class AddServiceLocationMap extends AppCompatActivity implements OnMapReadyCallback,LocationListener {
 
     LocationManager locationManager;
@@ -41,12 +41,52 @@ public class AddServiceLocationMap extends AppCompatActivity implements OnMapRea
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_map);
-        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.mymapfragment);
+        setContentView(R.layout.activity_add_service_location_map);
+        //Adding alert dialog to tell user how to select the location
 
+        /***************************************************************************************
+         *    Title: How to change textcolor in AlertDialog
+         *    Author: Mohammad
+         *    Date Accessed: 20 Dec. 2017
+         *    Code version: N/A
+         *    Availability: https://stackoverflow.com/questions/33437398/how-to-change-textcolor-in-alertdialog
+         *
+         ***************************************************************************************/
+
+        AlertDialog.Builder myBuilder=new AlertDialog.Builder(AddServiceLocationMap.this);
+        myBuilder.setMessage(Html.fromHtml("<font color='#000000'>Drag Marker to select the Location</font>"))
+                .setCancelable(false)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                       dialogInterface.cancel();
+                    }
+                });
+        AlertDialog alert=myBuilder.create();
+        alert.setTitle(Html.fromHtml("<font color='#000000'>Information</font>"));
+        alert.show();
+
+
+        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.mymapfragment);
         mapFragment.getMapAsync(this);
 
     }
+
+
+
+    /***************************************************************************************
+     *    Title: Android Maps: Part 1: Basic Maps
+     *    Author: Vivian Aranha
+     *    Date Accessed: 10 Dec. 2017
+     *    Code version: N/A
+     *    Availability: https://www.youtube.com/watch?v=lchyOhPREh4
+     *
+     ***************************************************************************************/
+
+    //method for setting up map
+    //it is coming from OnMapReadyCallback interface
+
+
 
     public void onMapReady(final GoogleMap map) {
         myMap = map;
@@ -63,7 +103,33 @@ public class AddServiceLocationMap extends AppCompatActivity implements OnMapRea
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1, 1,  this);
+
+
+        /***************************************************************************************
+         *    Title: LocationManager
+         *    Author: Android Developers
+         *    Date Accessed: 20 Dec. 2017
+         *    Code version: N/A
+         *    Availability: https://developer.android.com/reference/android/location/LocationManager.html#requestLocationUpdates(long, float, android.location.Criteria, android.app.PendingIntent)
+         *
+         ***************************************************************************************/
+
+        //setting up  current location on the map
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1,  this);
+
+
+
+        /***************************************************************************************
+         *    Title: Android Maps: Part 3: Markers
+         *    Author: Vivian Aranha
+         *    Date Accessed: 20 Dec. 2017
+         *    Code version: N/A
+         *    Availability: https://www.youtube.com/watch?v=k253ec4m33A
+         *
+         ***************************************************************************************/
+
+
+        //listener for marker drag
         myMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
             @Override
             public void onMarkerDragStart(Marker marker) {
@@ -78,11 +144,14 @@ public class AddServiceLocationMap extends AppCompatActivity implements OnMapRea
             @Override
             public void onMarkerDragEnd(Marker marker) {
 
+                //here onMarkerDragEnd the location of the service is taken
+                //confirmed by the user using AlertDialog.
+                //if user says Yes, the selected coordinates of the location are sent to RegisterService Activity using intent as Extra.
+
                 final LatLng ll=marker.getPosition();
                 marker.setTitle(Double.toString(ll.latitude));
-
                 AlertDialog.Builder myBuilder=new AlertDialog.Builder(AddServiceLocationMap.this);
-                myBuilder.setMessage("Are you sure you want to select this location??")
+                myBuilder.setMessage(Html.fromHtml("<font color='#000000'>Are you sure you want to select this location??</font>"))
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
@@ -102,13 +171,14 @@ public class AddServiceLocationMap extends AppCompatActivity implements OnMapRea
                             }
                         });
                 AlertDialog alert=myBuilder.create();
-                alert.setTitle("Alert");
+                alert.setTitle(Html.fromHtml("<font color='#000000'>Confirmation!!</font>"));
                 alert.show();
 
             }
         });
     }
 
+    //Override method to add marker with options and move camera to the location of marker (Location of the user)
     @Override
     public void onLocationChanged(Location location) {
 
@@ -120,13 +190,10 @@ public class AddServiceLocationMap extends AppCompatActivity implements OnMapRea
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.draggable(true);
         markerOptions.position(currentLocation);
-        markerOptions.title("i'm here");
+        markerOptions.title("You are here");
 
         myMap.addMarker(markerOptions);
-
-        // map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 17.0f));
-
-        myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 17.0f));
+        myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 10.0f));
     }
 
     @Override
@@ -144,18 +211,29 @@ public class AddServiceLocationMap extends AppCompatActivity implements OnMapRea
 
     }
 
+
+    /***************************************************************************************
+     *    Title: Android SDK: Implement an Options Menu
+     *    Author: Sue Smith
+     *    Date Accessed: 20 Dec. 2017
+     *    Code version: N/A
+     *    Availability: https://code.tutsplus.com/tutorials/android-sdk-implement-an-options-menu--mobile-9453
+     *
+     ***************************************************************************************/
+
+
+    //override method to add menu options into the activity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu,menu);
         return super.onCreateOptionsMenu(menu);
     }
 
+    //override method to handle different menu item clicks.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.mapTypeNone:
-                myMap.setMapType(GoogleMap.MAP_TYPE_NONE);
-                break;
+
             case R.id.mapTypeNormal:
                 myMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                 break;

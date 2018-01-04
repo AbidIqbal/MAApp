@@ -18,7 +18,7 @@ import android.widget.Toast;
 public class ServicesList extends AppCompatActivity {
 
     public ListView listView;
-    public String[] serviceNames=new String[] {"Hotels","Fast Foods","Shopping Malls","Mobile Shops","Hospitals","Tuck Shops","Car Mechanic","Petrol Pumps","Airports","Sports Shop"};
+    public String[] serviceNames=new String[] {"Hotels","Fast Food","Shopping Malls","Mobile Shops","Hospitals","Tuck Shop","Car Mechanic","Petrol Pumps","Airports","Sports Shops","Banks","Bus Stations","Police"};
 
 
     @Override
@@ -30,6 +30,16 @@ public class ServicesList extends AppCompatActivity {
         setListView();
 
     }
+
+
+    /***************************************************************************************
+     *    Title: ArrayAdapter in android to create simple listview
+     *    Author: ucsunil
+     *    Date Accessed: 22 Dec. 2017
+     *    Code version: N/A
+     *    Availability: https://stackoverflow.com/questions/19079400/arrayadapter-in-android-to-create-simple-listview
+     *
+     ***************************************************************************************/
 
     //this method is used to set listviewdata, adapter, and to handle clicks on any list item
     public void setListView(){

@@ -68,14 +68,14 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.041"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2"
-            app:layout_constraintVertical_bias="0.072" />
+            app:layout_constraintVertical_bias="0.07" />
 
         <Spinner
             android:id="@+id/typeOfService"
-            android:layout_width="137dp"
+            android:layout_width="wrap_content"
             android:layout_height="42dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
@@ -160,10 +160,10 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.009"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/contactOfService"
-            app:layout_constraintVertical_bias="0.062" />
+            app:layout_constraintVertical_bias="0.063" />
 
 
         <Button
@@ -229,10 +229,10 @@
             android:textColorHint="#fff"
             app:layout_constraintBottom_toTopOf="@+id/registerServiceButton"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.606"
+            app:layout_constraintHorizontal_bias="0.621"
             app:layout_constraintStart_toEndOf="@+id/textView"
             app:layout_constraintTop_toBottomOf="@+id/fromTime"
-            app:layout_constraintVertical_bias="0.25" />
+            app:layout_constraintVertical_bias="0.2" />
 
         <View
             android:id="@+id/view4"
@@ -258,7 +258,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4"
-            app:layout_constraintVertical_bias="0.067" />
+            app:layout_constraintVertical_bias="0.062" />
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

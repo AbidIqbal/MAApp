@@ -28,7 +28,8 @@
                 android:layout_marginTop="10dp"
                 android:cropToPadding="false"
                 android:padding="16dp"
-                android:src="@drawable/logo" />
+                android:src="@drawable/logo"
+                android:id="@+id/appLogo"/>
 
             <EditText
                 android:id="@+id/email"

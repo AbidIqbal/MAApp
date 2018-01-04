@@ -4,7 +4,7 @@
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
-    <string name="map_type_none">None </string>
+
     <string name="map_type_normal">Normal Map</string>
     <string name="map_type_terrain">Terrain Map</string>
     <string name="map_type_satellite">Satellite Map</string>
@@ -13,14 +13,19 @@
     <string name="addService">Add Service</string>
 
     <string-array name="services">
-        <item>Hotel</item>
-        <item>TuckShop</item>
+        <item>Hotels</item>
+        <item>Fast Food</item>
+        <item>Shopping Malls</item>
+        <item>Mobile Shops</item>
+        <item>Hospitals</item>
+        <item>Tuck Shop</item>
         <item>Car Mechanic</item>
-        <item>Mobile Shop</item>
-        <item>Shopping Mall</item>
-        <item>Petrol Pump</item>
-        <item>Hospital</item>
-        <item>Airport</item>
+        <item>Petrol Pumps</item>
+        <item>Airports</item>
+        <item>Sports Shops</item>
+        <item>Banks</item>
+        <item>Bus Stations</item>
+        <item>Police</item>
     </string-array>
 
 </resources>
